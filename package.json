@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/TakeruUshio/playwright-test-sample/issues"
   },
-  "homepage": "https://github.com/TakeruUshio/playwright-test-sample#readme"
+  "homepage": "https://github.com/TakeruUshio/playwright-test-sample#readme",
+  "devDependencies": {
+    "typescript": "^4.3.5"
+  }
 }
