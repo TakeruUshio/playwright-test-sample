@@ -54,4 +54,105 @@ test.describe(':visibleを使って2つのセレクターの操作', () => {
       expect(await page.isVisible('.select1 ul')).toBeFalsy();
       expect(await page.isVisible('.select2 ul')).toBeTruthy();
     });
+
+    test('lotator使用', async ({page}) => {
+        const visibleUl = page.locator('ul:visible');
+        const select1   = page.locator('.select1');
+        const select1ul = page.locator('.select1 ul');
+        const select2   = page.locator('.select2');
+        const select2ul = select2.locator('ul'); // locatorからlocatorを作ることも可能
+
+        expect(await visibleUl.isVisible()).toBeFalsy;
+
+        await select1.click();
+        await (await select1ul.elementHandle())?.waitForElementState('visible');
+        expect(await visibleUl.isVisible()).toBeTruthy;
+        expect(await select1ul.isVisible()).toBeTruthy;
+        expect(await select2ul.isVisible()).toBeFalsy;
+
+        await page.click('.select1 ul li:has-text("Option 2")');
+        await page.waitForSelector('.select1 ul', {state: 'hidden'});
+        expect(await page.isVisible('ul')).toBeFalsy();
+        expect(await page.isVisible('ul:visible')).toBeFalsy();
+        expect(await page.isVisible('.select1 ul')).toBeFalsy();
+        expect(await page.isVisible('.select2 ul')).toBeFalsy();
+
+        await select2.click();
+        await (await select2ul.elementHandle())?.waitForElementState('visible');
+
+        // strict mode
+        try {
+            await page.isVisible('ul', {strict: true, timeout: 100});
+            throw new Error('isVisible should throw an error with strict option');
+        } catch (e) {
+            expect(e.message).toContain(
+                'strict mode violation: selector resolved to 2 elements.'
+            );
+        }
+        expect(await visibleUl.isVisible()).toBeTruthy();
+        expect(await select1ul.isVisible()).toBeFalsy();
+        expect(await select2ul.isVisible()).toBeTruthy();
+    });
+});
+
+test.describe('nthのテスト', () => {
+    const chnageNum = async (
+        page: Page,
+        name: string,
+        newValue: number,
+        sumExpected: number,
+        loc: Locator
+    ) => {
+        await loc.fill(newValue.toString());
+        await loc.press('Enter');
+        const sumSelector = `tr:has-text("${name}") td.sum`;
+        await page.waitForSelector(`${sumSelector}:has-text("${sumExpected}")`);
+    };
+
+    const add = async (
+        page: Page,
+        name: string,
+        sumExpected: number,
+        loc: Locator
+    ) => {
+        await loc.click();
+        const sumSelector = `tr:has-text("${name}") td.sum`;
+        await page.waitForSelector(`${sumSelector}:has-text("${sumExpected}")`);
+    };
+
+    const reset = async (page: Page, name: String, loc: Locator) => {
+        await loc.click();
+        const sumSelector = `tr:has-text("${name}") td.sum`;
+        await page.waitForSelector(`${sumSelector}:has-text("0")`);
+    };
+
+    test.describe('with nth method', () => {
+        test('Alvin', async ({ page }) =>
+            await reset(page, 'Alvin', page.locator('button.reset').nth(0)));
+        test('Alan', async ({ page }) =>
+            await add(page, 'Alan', 15.04, page.locator('button.add').nth(1)));
+        test('Jonathan', async ({ page }) =>
+            await chnageNum(
+                page,
+                'Jonathan',
+                2,
+                14,
+                page.locator('input.num').nth(2)
+            ));
+    });
+
+    test.describe('with nth selector', () => {
+        test('Alvin', async ({page}) =>
+          await reset(page, 'Alvin', page.locator('button.reset >> nth=0')));
+        test('Alan', async ({page})=>
+          await add(page, 'Alan', 15.04, page.locator('button.add >> nth=1')));
+        test('Jonathan', async ({page}) =>
+          await chnageNum(
+              page,
+              'Jonathan',
+              2,
+              14,
+              page.locator('input.num >> nth=2')
+          ));
+    });
 });
