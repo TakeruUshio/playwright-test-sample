@@ -39,7 +39,7 @@ test.describe(':visibleを使って2つのセレクターの操作', () => {
       await page.click('.select2');
       await page.waitForSelector('.select2 ul');
 
-      // strict mode
+      // strict mode の検証
       try {
           await page.isVisible('ul', {strict: true, timeout: 100});
           throw new Error('isVisible should throw an error with strict option');
@@ -62,13 +62,14 @@ test.describe(':visibleを使って2つのセレクターの操作', () => {
         const select2   = page.locator('.select2');
         const select2ul = select2.locator('ul'); // locatorからlocatorを作ることも可能
 
-        expect(await visibleUl.isVisible()).toBeFalsy;
+
+        expect(await visibleUl.isVisible()).toBeFalsy();
 
         await select1.click();
         await (await select1ul.elementHandle())?.waitForElementState('visible');
-        expect(await visibleUl.isVisible()).toBeTruthy;
-        expect(await select1ul.isVisible()).toBeTruthy;
-        expect(await select2ul.isVisible()).toBeFalsy;
+        expect(await visibleUl.isVisible()).toBeTruthy();
+        expect(await select1ul.isVisible()).toBeTruthy();
+        expect(await select2ul.isVisible()).toBeFalsy();
 
         await page.click('.select1 ul li:has-text("Option 2")');
         await page.waitForSelector('.select1 ul', {state: 'hidden'});
@@ -80,9 +81,9 @@ test.describe(':visibleを使って2つのセレクターの操作', () => {
         await select2.click();
         await (await select2ul.elementHandle())?.waitForElementState('visible');
 
-        // strict mode
+        // locatorを使用しても strict mode が使える検証
         try {
-            await page.isVisible('ul', {strict: true, timeout: 100});
+            await page.locator('ul').isVisible({strict: true, timeout: 100});
             throw new Error('isVisible should throw an error with strict option');
         } catch (e) {
             expect(e.message).toContain(
@@ -96,7 +97,7 @@ test.describe(':visibleを使って2つのセレクターの操作', () => {
 });
 
 test.describe('nthのテスト', () => {
-    const chnageNum = async (
+    const changeNum = async (
         page: Page,
         name: string,
         newValue: number,
@@ -132,7 +133,7 @@ test.describe('nthのテスト', () => {
         test('Alan', async ({ page }) =>
             await add(page, 'Alan', 15.04, page.locator('button.add').nth(1)));
         test('Jonathan', async ({ page }) =>
-            await chnageNum(
+            await changeNum(
                 page,
                 'Jonathan',
                 2,
@@ -147,7 +148,7 @@ test.describe('nthのテスト', () => {
         test('Alan', async ({page})=>
           await add(page, 'Alan', 15.04, page.locator('button.add >> nth=1')));
         test('Jonathan', async ({page}) =>
-          await chnageNum(
+          await changeNum(
               page,
               'Jonathan',
               2,
