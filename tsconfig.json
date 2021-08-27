@@ -5,5 +5,5 @@
     "outDir": "build",
     "lib": ["dom", "ES2015", "ES2016", "ES2017", "ES2018", "ES2019"]
   },
-  "include": [ "src/**/*.ts", "test/**/*.ts"]
+  "include": ["src/**/*.ts", "test/**/*.ts"]
 }
