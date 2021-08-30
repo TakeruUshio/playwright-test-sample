@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+  <!--
+        See https://materializecss.com/
+        Start local http server
+          $ $(npm bin)/sirv src/scenarios/essentials/playwright/static-site1 --dev
+        And open http://localhost:5000
+      -->
+
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--Import materialize.css-->
+  <link type="text/css" rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+  <div class="row">
+    <div class="input-field col s6 select1">
+      <select>
+        <option value="" disabled selected>Choose your option</option>
+        <option value="1">Option 1</option>
+        <option value="2">Option 2</option>
+        <option value="3">Option 3</option>
+      </select>
+      <label>Select field 1</label>
+    </div>
+
+    <div class="input-field col s6 select2">
+      <select>
+        <option value="" disabled selected>Choose your option</option>
+        <option value="A">Option A</option>
+        <option value="B">Option B</option>
+        <option value="C">Option C</option>
+      </select>
+      <label>Select field 2</label>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col s12">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Item Name</th>
+            <th>Item Price</th>
+            <th>Item Number</th>
+            <th>Sum</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Alvin</td>
+            <td>Eclair</td>
+            <td class="value unit_price">$0.87</td>
+            <td class="value"><input class="num" type="number" value="2"></td>
+            <td class="value sum">$0.87</td>
+            <td>
+              <button class="add">追加</button>
+              <button class="reset">削除</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Alan</td>
+            <td>Jellybean</td>
+            <td class="value unit_price">$3.76</td>
+            <td class="value"><input class="num" type="number" value="3"></td>
+            <td class="value sum">$0.87</td>
+            <td>
+              <button class="add">追加</button>
+              <button class="reset">削除</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Jonathan</td>
+            <td>Lollipop</td>
+            <td class="value unit_price">$7.00</td>
+            <td class="value"><input class="num" type="number" value="1"></td>
+            <td class="value sum">$0.87</td>
+            <td>
+              <button class="add">追加</button>
+              <button class="reset">削除</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Joseph</td>
+            <td>Donut</td>
+            <td class="value unit_price">$2.00</td>
+            <td class="value"><input class="num" type="number" value="1"></td>
+            <td class="value sum">$0.87</td>
+            <td>
+              <button class="add">追加</button>
+              <button class="reset">削除</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!--JavaScript at end of body for optimized loading-->
+  <script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', () => {
+      var elems = document.querySelectorAll('select');
+      var instances = M.FormSelect.init(elems, {});
+
+      const calc = (row, fn) => {
+        const unitPrice = row.querySelector('.unit_price');
+        const num = row.querySelector('input.num')
+        const sum = row.querySelector('.sum');
+        if (fn) fn(num)
+        sum.innerHTML =
+          Number(num.value) *
+          Number(unitPrice.innerHTML.replaceAll(/[^\d\.\+\-]/g, ''))
+      }
+
+      document.querySelectorAll('input.num').forEach(function (i) {
+        i.addEventListener('change', function (event) {
+          calc(event.target.parentElement.parentElement);
+        });
+        calc(i.parentElement.parentElement);
+      });
+      document.querySelectorAll('button.add').forEach(function (i) {
+        i.addEventListener('click', function (event) {
+          calc(event.target.parentElement.parentElement, (num) => {
+            num.value = Number(num.value) + 1;
+          });
+        });
+      });
+      document.querySelectorAll('button.reset').forEach(function (i) {
+        i.addEventListener('click', function (event) {
+          calc(event.target.parentElement.parentElement, (num) => {
+            num.value = 0;
+          });
+        });
+      });
+    });
+  </script>
+
+</body>
+
+</html>
