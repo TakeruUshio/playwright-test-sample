@@ -43,7 +43,7 @@ test.describe(':visibleを使って2つのセレクターの操作', () => {
       try {
           await page.isVisible('ul', {strict: true, timeout: 100});
           throw new Error('isVisible should throw an error with strict option');
-      } catch (e) {
+      } catch (e: any) {
           expect(e.message).toContain(
               'strict mode violation: selector resolved to 2 elements'
           );
@@ -83,9 +83,9 @@ test.describe(':visibleを使って2つのセレクターの操作', () => {
 
         // locatorを使用しても strict mode が使える検証
         try {
-            await page.locator('ul').isVisible({strict: true, timeout: 100});
+            await page.locator('ul').isVisible();
             throw new Error('isVisible should throw an error with strict option');
-        } catch (e) {
+        } catch (e: any) {
             expect(e.message).toContain(
                 'strict mode violation: selector resolved to 2 elements.'
             );
