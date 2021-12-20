@@ -28,11 +28,11 @@ export class StaticHttpServer {
   start(): void {
     // https://github.com/lukeed/sirv/tree/master/packages/sirv-cli
     const proc = spawn(
-      '$(npm bin)/sirv',
-      [join(__dirname, 'static-site1'), '--port', this.port.toString()],
+      'npx',
+      ['sirv', join(__dirname, 'static-site1'), '--port', this.port.toString()],
       {
         detached: false,
-        shell: true,
+        shell: false,
         stdio: ['ignore', 'pipe', 'pipe'],
       }
     );
@@ -42,10 +42,11 @@ export class StaticHttpServer {
     this.handleReadable('stderr', proc.stderr);
 
     this.serverProcess = proc;
+    log(`Started sirv with pid=${proc.pid}\n`);
 
     // https://github.com/jeffbski/wait-on
     execSync(
-      `$(npm bin)/wait-on http://localhost:${this.port} --delay 1000 --httpTimeout 30000`
+      `npx wait-on http://localhost:${this.port} --delay 1000 --httpTimeout 30000`
     );
   }
 
@@ -95,7 +96,7 @@ export class StaticHttpServer {
   }
 
   killProcess(p: ChildProcess): void {
-    log('serverProcess is being killed\n');
+    log(`serverProcess (pid=${p.pid}) is being killed\n`);
     if (p.kill('SIGTERM')) {
       log('serverProcess was killed with SIGTERM\n');
     } else if (p.kill()) {
