@@ -1,14 +1,23 @@
 # playwright-test-sample
 This repository is for Playwight validation
 
+## Install dependencies:
+
+```shell
+npm install
+```
+
 ## Run Test
 
-```
-$(npm bin)/playwright test src/static-site1-test.spec.ts
+Run test (headless execution):
+
+```shell
+npx playwright test src/static-site1-test.spec.ts
 ```
 
-Use headed
-```
-$(npm bin)/playwright test src/static-site1-test.spec.ts --headed
+Run test with browser window:
+
+```shell
+npx playwright test src/static-site1-test.spec.ts --headed
 ```
 
