@@ -43,7 +43,7 @@ test.describe(':visibleを使って2つのセレクターの操作', () => {
           throw new Error('isVisible should throw an error with strict option');
       } catch (e: any) {
           expect(e.message).toContain(
-              'strict mode violation: selector resolved to 2 elements'
+              'strict mode violation: \"ul\" resolved to 2 elements:'
           );
       }
 
@@ -85,7 +85,7 @@ test.describe(':visibleを使って2つのセレクターの操作', () => {
             throw new Error('isVisible should throw an error with strict option');
         } catch (e: any) {
             expect(e.message).toContain(
-                'strict mode violation: selector resolved to 2 elements.'
+                'strict mode violation: \"ul\" resolved to 2 elements:'
             );
         }
         expect(await visibleUl.isVisible()).toBeTruthy();
