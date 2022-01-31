@@ -1,6 +1,4 @@
-import {test, expect, Page} from '@playwright/test';
-
-import {Locator} from 'playwright';
+import {test, expect, Locator, Page} from '@playwright/test';
 
 import {StaticHttpServer} from './StaticHttpServer';
 
