@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "postinstall": "npx playwright install",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "gts lint",
     "clean": "gts clean",
@@ -30,8 +31,7 @@
     "typescript": "^4.0.3"
   },
   "dependencies": {
-    "@playwright/test": "^1.14.0",
-    "playwright": "^1.14.1",
+    "@playwright/test": "^1.18.1",
     "sirv-cli": "^1.0.14",
     "wait-on": "^6.0.0"
   }
