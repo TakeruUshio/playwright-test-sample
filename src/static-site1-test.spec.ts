@@ -3,7 +3,7 @@ import {test, expect, Locator, Page} from '@playwright/test';
 import {StaticHttpServer} from './StaticHttpServer';
 
 const serverPort = 5000;
-const targetUrl = `http://localhost:${serverPort}`;
+const targetUrl = `http://127.0.0.1:${serverPort}`;
 
 const server = new StaticHttpServer(serverPort);
 
