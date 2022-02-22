@@ -33,6 +33,6 @@
   "dependencies": {
     "@playwright/test": "^1.18.1",
     "sirv-cli": "^2.0.2",
-    "wait-on": "^6.0.0"
+    "wait-on": "^6.0.1"
   }
 }
