@@ -50,7 +50,7 @@ test.describe(':visibleを使って2つのセレクターの操作', () => {
       // expect().toBeTruthy(); // このセレクタでは表示されない要素を指す場合もある
       expect(await page.isVisible('ul:visible')).toBeTruthy();
       expect(await page.isVisible('.select1 ul')).toBeFalsy();
-      expect(await page.isVisible('.select2 ul')).toBeTruthy();
+      expect(await page.isVisible('.select2 ul')).toBeFalsy();
     });
 
     test('lotator使用', async ({page}) => {
