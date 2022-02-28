@@ -16,3 +16,9 @@ jobs:
 
       - run: npm install
       - run: npx playwright test src/static-site1-test.spec.ts
+
+      # https://github.com/actions/upload-artifact
+      - uses: actions/upload-artifact@v2
+        with:
+          name: playwright reports
+          path: reports/
