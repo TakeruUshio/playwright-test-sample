@@ -22,3 +22,4 @@ jobs:
         with:
           name: playwright reports
           path: reports/
+        if: ${{ always() }}
