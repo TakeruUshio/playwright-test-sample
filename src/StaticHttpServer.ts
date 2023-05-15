@@ -29,7 +29,14 @@ export class StaticHttpServer {
     // https://github.com/lukeed/sirv/tree/master/packages/sirv-cli
     const proc = spawn(
       'npx',
-      ['sirv', join(__dirname, 'static-site1'), '--host', '127.0.0.1', '--port', this.port.toString()],
+      [
+        'sirv',
+        join(__dirname, 'static-site1'),
+        '--host',
+        '127.0.0.1',
+        '--port',
+        this.port.toString(),
+      ],
       {
         detached: false,
         shell: false,
