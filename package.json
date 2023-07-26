@@ -30,7 +30,7 @@
     "typescript": "^5.1.6"
   },
   "dependencies": {
-    "@playwright/test": "^1.36.1",
+    "@playwright/test": "^1.36.2",
     "sirv-cli": "^2.0.2",
     "wait-on": "^7.0.1"
   }
