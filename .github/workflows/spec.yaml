@@ -11,8 +11,7 @@ jobs:
       # https://github.com/actions/setup-node
       - uses: actions/setup-node@v3
         with:
-          node-version: '16'
-          check-latest: true
+          node-version-file: '.node-version'
 
       - run: npm install
       - run: npx playwright test src/static-site1-test.spec.ts
