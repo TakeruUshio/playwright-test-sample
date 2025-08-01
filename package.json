@@ -27,7 +27,7 @@
   "devDependencies": {
     "@types/node": "^14.18.63",
     "gts": "^6.0.2",
-    "typescript": "^5.8.3"
+    "typescript": "^5.9.2"
   },
   "dependencies": {
     "@playwright/test": "^1.54.1",
